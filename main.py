@@ -14,7 +14,7 @@ def text_to_integer(text):
 
     return str_to_num
 
-
+#
 def integer_to_text(number):
     string = ""
     while number != 1:
