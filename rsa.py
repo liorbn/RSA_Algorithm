@@ -1,5 +1,7 @@
 from random import randrange, getrandbits, randint
-level = 256
+n = None
+e = None
+d = None
 
 def gcd(x, y):
     while y:
@@ -78,6 +80,7 @@ def generate_prime_number(length=2048):
             length -- int -- length of the prime to generate, in          bits
         return a prime
     """
+    print("Generating prime numbers...")
     p = 4
     # keep generating while the primality test fail
     while not is_prime(p, 128):
@@ -103,12 +106,16 @@ def generate_public_key_e(phi_n):
 
 
 ### Until here is rsa algorithm
-p1 = generate_prime_number(level)
-p2 = generate_prime_number(level)
-n = generate_public_key_n(p1, p2)
-phi_of_n = phi(p1, p2)
-e = generate_public_key_e(phi_of_n)
-d = mod_inv(e, phi_of_n)
+def init(level=256):
+    p1 = generate_prime_number(level)
+    p2 = generate_prime_number(level)
+    global n
+    n = generate_public_key_n(p1, p2)
+    phi_of_n = phi(p1, p2)
+    global e
+    e = generate_public_key_e(phi_of_n)
+    global d
+    d = mod_inv(e, phi_of_n)
 
 
 def encrypt(message, n, e):
@@ -128,8 +135,5 @@ def get_public_keys():
     return n, e
 
 
-def set_encryption_level(new_level):
-    global level
-    level = new_level
 
 
